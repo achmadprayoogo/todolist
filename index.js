@@ -26,7 +26,7 @@ async function run() {
   await mongoose.model('todoLists').findOne(); // Works!
 };
 
-const Todo = await mongoose.model('todoLists', todoSchema);
+const Todo = mongoose.model('todoLists', todoSchema);
 
 
 // const todoDefault = new Todo({
