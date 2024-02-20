@@ -4,7 +4,6 @@ import {dirname} from 'path';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import { error } from 'console';
-var timeout = require ('connect-timeout');
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -37,7 +36,6 @@ const Todo = await mongoose.model('todoLists', todoSchema);
 // });
 
 
-app.use(timeout('120s'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -195,6 +193,7 @@ app.post("/delete/:parameter", async(req, res)=>{
 });
 
 
-app.listen(port, ()=>{
-    console.log(`app listen form port ${port}`);
+const server = app.listen(port, function() {
+  server.timeout = 50000; // Timeout 50 detik
+  console.log(`app listen form port ${port}`);
 });
