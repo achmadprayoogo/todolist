@@ -5,26 +5,20 @@ import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import { error } from 'console';
 
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = 3000;
 var to_doList = [];
 var date = new Date().getDate();
 
-
-// mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test',{
-//     useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   serverSelectionTimeoutMS: 50000
-// });
-
+// setup database
 const run = async () => {
-  await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
-  console.log("Connected to myDB");
-}
-
-run()
-.catch((err) => console.error(err))
+    await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
+    console.log("Connected to myDB");
+  }
+  
+  run().catch((err) => console.error(err))
 
 const todoSchema = new mongoose.Schema({
     _id: Number,
@@ -46,6 +40,7 @@ const Todo = await mongoose.model('todoLists', todoSchema);
 //         console.log("Error => "+ err);
 //     };
 // });
+
 
 
 app.use(express.static('public'));
@@ -205,7 +200,6 @@ app.post("/delete/:parameter", async(req, res)=>{
 });
 
 
-const server = app.listen(port, function() {
-  server.timeout = 50000; // Timeout 50 detik
-  console.log(`app listen form port ${port}`);
+app.listen(port, ()=>{
+    console.log(`app listen form port ${port}`);
 });
