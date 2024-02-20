@@ -131,7 +131,7 @@ app.get("/:parameter", async (req, res)=>{
                         _id : 0,
                         task : `Add Your Todo for ${parameter}`
                     }]
-                });
+                },{socketTimeoutMS: 45000});
     
                 //save new Item of parameter
                 await newItem.save().then( async (data)=>{
@@ -171,7 +171,7 @@ app.post("/added/:parameter", async (req, res)=>{
             const newTodo = new Todo({
                 _id : data.taskList.length,
                 task: req.body.newTodo
-            });
+            },{socketTimeoutMS: 45000});
             console.log("receive: " + newTodo);
             // push new todo to Tasklist array
             await Item.updateOne({reqParameter: parameter}, {$push: { taskList: newTodo }}).then((data) => {
