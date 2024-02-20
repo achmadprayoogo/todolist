@@ -12,7 +12,17 @@ var to_doList = [];
 var date = new Date().getDate();
 
 // setup database
-mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
+const connectToDatabase = async () => {
+    try {
+        await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
+        console.log('Connected to MongoDB');
+        // Lanjutkan eksekusi kode setelah koneksi berhasil
+        // ...
+    } catch (err) {
+        console.error('Error connecting to MongoDB:', err);
+    }
+};
+
 const todoSchema = new mongoose.Schema({
     _id: Number,
     task: { 
