@@ -16,7 +16,8 @@ const connectToDatabase = async () => {
     try {
         await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test',{
             serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds
-            socketTimeoutMS: 45000}, // Increase socket timeout to 45 seconds);
+            socketTimeoutMS: 45000
+        }) // Increase socket timeout to 45 seconds);
         console.log('Connected to MongoDB');
         // Lanjutkan eksekusi kode setelah koneksi berhasil
         // ...
