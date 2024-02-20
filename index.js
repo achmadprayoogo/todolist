@@ -12,14 +12,6 @@ const port = 3000;
 var to_doList = [];
 var date = new Date().getDate();
 
-// setup database
-const run = async () => {
-    await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
-    console.log("Connected to myDB");
-  }
-  
-  run().catch((err) => console.error(err))
-
 const todoSchema = new mongoose.Schema({
     _id: Number,
     task: { 
@@ -27,8 +19,16 @@ const todoSchema = new mongoose.Schema({
         required: true 
     }
 });
+// setup database
+async function run() {
+  await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
+    const Todo = await mongoose.model('todoLists', todoSchema);
+  await mongoose.model('todoLists').findOne(); // Works!
+};
 
-const Todo = await mongoose.model('todoLists', todoSchema);
+
+
+
 // const todoDefault = new Todo({
 //     _id: 0,
 //     task: "add your todo"
