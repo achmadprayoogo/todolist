@@ -22,11 +22,11 @@ const todoSchema = new mongoose.Schema({
 // setup database
 async function run() {
   await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
-    const Todo = await mongoose.model('todoLists', todoSchema);
+    
   await mongoose.model('todoLists').findOne(); // Works!
 };
 
-
+const Todo = await mongoose.model('todoLists', todoSchema);
 
 
 // const todoDefault = new Todo({
