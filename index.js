@@ -4,7 +4,7 @@ import {dirname} from 'path';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import { error } from 'console';
-import timeout from 'connect-timeout';
+var timeout = require ('connect-timeout');
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
