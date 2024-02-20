@@ -12,11 +12,19 @@ var to_doList = [];
 var date = new Date().getDate();
 
 
-mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test',{
-    useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 50000
-});
+// mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test',{
+//     useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   serverSelectionTimeoutMS: 50000
+// });
+
+const run = async () => {
+  await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
+  console.log("Connected to myDB");
+}
+
+run()
+.catch((err) => console.error(err))
 
 const todoSchema = new mongoose.Schema({
     _id: Number,
