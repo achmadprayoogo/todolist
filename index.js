@@ -14,8 +14,8 @@ var date = new Date().getDate();
 
 mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test',{
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    bufferTimeoutMS: 30000
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 50000
 });
 
 const todoSchema = new mongoose.Schema({
