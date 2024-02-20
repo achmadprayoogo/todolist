@@ -19,15 +19,14 @@ const todoSchema = new mongoose.Schema({
         required: true 
     }
 });
+
+let Todo;
 // setup database
 async function run() {
   await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
-    
+  Todo = mongoose.model('todoLists', todoSchema);
   await mongoose.model('todoLists').findOne(); // Works!
 };
-
-const Todo = mongoose.model('todoLists', todoSchema);
-
 
 // const todoDefault = new Todo({
 //     _id: 0,
