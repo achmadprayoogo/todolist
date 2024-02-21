@@ -12,6 +12,8 @@ const port = 3000;
 var to_doList = [];
 var date = new Date().getDate();
 
+// setup database
+
 const todoSchema = new mongoose.Schema({
     _id: Number,
     task: { 
@@ -21,13 +23,18 @@ const todoSchema = new mongoose.Schema({
 });
 
 let Todo;
-// setup database
-async function run() {
-  await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
-  Todo = mongoose.model('todoLists', todoSchema);
-  await mongoose.model('todoLists').findOne(); // Works!
-};
 
+const run = async () => {
+    await mongoose.connect('mongodb+srv://syihabachmad0:PentolKasar3000@cluster0.pxtg5fa.mongodb.net/test');
+    console.log("Connected to myDB");
+    Todo = await mongoose.model('todoLists', todoSchema);
+  }
+  
+  run().catch((err) => console.error(err))
+
+
+
+//const Todo = await mongoose.model('todoLists', todoSchema);
 // const todoDefault = new Todo({
 //     _id: 0,
 //     task: "add your todo"
@@ -46,7 +53,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/",(req, res)=>{
-    Todo.find().then( async (data) => {
+    const findTodo = Todo.find().then( async (data) => {
         if (!data) {
             
         };        
@@ -58,11 +65,12 @@ app.get("/",(req, res)=>{
         console.error(error);
         res.status(500).send("Internal Server Error");
     });
+    setTimeout(findTodo, 20000);
 });
 
 app.post("/added",(req, res)=>{
     if (req.body.newTodo != '') {
-        Todo.find().then((data) => {
+        const findTodo = Todo.find().then((data) => {
             const newTodo = new Todo({
                 _id: data.length,
                 task: req.body.newTodo
@@ -76,7 +84,7 @@ app.post("/added",(req, res)=>{
                     };
                 });
         })
-        
+        setTimeout(findTodo, 20000);
         
     }
     res.redirect("/");
@@ -84,7 +92,7 @@ app.post("/added",(req, res)=>{
 
 app.post("/delete",(req, res)=>{
     //console.log(req.body.checkbox);
-    Todo.findByIdAndRemove({_id:req.body.checkbox}).then((data)=>{
+    const findTodo = Todo.findByIdAndRemove({_id:req.body.checkbox}).then((data)=>{
         if (!data) {
             console.log('cannot delete :' + req.body.checkbox);
         } else {
@@ -92,6 +100,7 @@ app.post("/delete",(req, res)=>{
         }
     });
     res.redirect("/");
+    setTimeout(findTodo, 20000);
 });
 
 ///////////////////////////////////////////////////////////////////////
@@ -114,7 +123,7 @@ app.get("/:parameter", async (req, res)=>{
     const parameter = req.params.parameter;
 
     // find to check parameter is already exist
-    Item.findOne({reqParameter: parameter}).then(async (data)=>{
+    const findTodo = Item.findOne({reqParameter: parameter}).then(async (data)=>{
             if (!data) {
 
                 // creating new item of parameter if does not exist 
@@ -153,6 +162,7 @@ app.get("/:parameter", async (req, res)=>{
                     });
             };
         });
+        setTimeout(findTodo, 20000);
 });
 
 app.post("/added/:parameter", async (req, res)=>{
@@ -160,7 +170,7 @@ app.post("/added/:parameter", async (req, res)=>{
     if (req.body.newTodo != '') {
 
         // get taskList.length to create order id of new todo
-        await Item.findOne({reqParameter: parameter}).then( async (data) => {
+        const findTodo = await Item.findOne({reqParameter: parameter}).then( async (data) => {
             const newTodo = new Todo({
                 _id : data.taskList.length,
                 task: req.body.newTodo
@@ -175,6 +185,7 @@ app.post("/added/:parameter", async (req, res)=>{
                 };
             });
         })
+        setTimeout(findTodo, 20000);
     }
     // go to /parameter again
     res.redirect(`/${parameter}`);
@@ -186,7 +197,7 @@ app.post("/delete/:parameter", async(req, res)=>{
     // get id of taskList object
     const id = req.body.checkbox;
     // delete/pull out object that _id matches with id from the takList array
-    await Item.updateOne({ reqParameter:parameter },{ $pull: { taskList: { _id: id } } }).then( (err, result) => {
+    const updateTodo = await Item.updateOne({ reqParameter:parameter },{ $pull: { taskList: { _id: id } } }).then( (err, result) => {
           if (err) {
             console.error('Error:', err);
           } else {
@@ -194,6 +205,7 @@ app.post("/delete/:parameter", async(req, res)=>{
           }
         }
       );
+      setTimeout(updateTodo, 20000);
     // go to /parameter again
     res.redirect("/"+parameter);
 });
